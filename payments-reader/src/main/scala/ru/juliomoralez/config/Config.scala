@@ -4,10 +4,12 @@ import cloudflow.streamlets.{ConfigParameter, StringConfigParameter}
 
 object Config {
   val fileDir: ConfigParameter = StringConfigParameter(
-    "file-dir"
+    "file-dir",
+    "Директория с файлами платежей"
   )
   val fileRegex: ConfigParameter = StringConfigParameter(
-    "file-regex"
+    "file-regex",
+    "Маска файлов платежей"
   )
 
   val config: Vector[ConfigParameter] = Vector(

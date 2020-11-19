@@ -16,29 +16,32 @@ object PaymentChecker extends FlinkStreamlet {
   val outInvalid: AvroOutlet[Message] = AvroOutlet[Message]("out-invalid")
   val shape: StreamletShape = StreamletShape(in).withOutlets(outValid, outInvalid)
 
-  override def configParameters: Vector[ConfigParameter] = config
+  lazy val paymentR: Regex = context.streamletConfig.getString(paymentRegex.key).r
 
   final case class CheckedTransaction(
                      valid: Option[Payment],
                      invalid: Option[Message])
 
+  def checkTransaction: Message => CheckedTransaction = { message =>
+    message.text match {
+      case paymentR(from, _, to, _, value) => CheckedTransaction(Some(Payment(from, to, value.toInt)), None)
+      case _ => CheckedTransaction(None, Some(message))
+    }
+  }
+
+  override def configParameters: Vector[ConfigParameter] = config
+
   override def createLogic(): FlinkStreamletLogic = new FlinkStreamletLogic() {
 
     override def buildExecutionGraph: Unit = {
       try {
-        val paymentR: Regex = context.streamletConfig.getString(paymentRegex.key).r
-        def checkTransaction(message: Message): CheckedTransaction = {
-          message.text match {
-            case paymentR(from, _, to, _, value) => CheckedTransaction(Some(Payment(from, to, value.toInt)), None)
-            case _ => CheckedTransaction(None, Some(message))
-          }
-        }
-
-        val checkedTransaction: DataStream[CheckedTransaction] = readStream(in).map(message => checkTransaction(message))
+        val checkedTransaction: DataStream[CheckedTransaction] = readStream(in).map(checkTransaction)
         writeStream(outValid, checkedTransaction.flatMap(_.valid))
         writeStream(outInvalid, checkedTransaction.flatMap(_.invalid))
       } catch {
-        case e: Exception => log.error(e.getStackTrace.mkString)
+        case e: Exception =>
+          log.error("PaymentChecker error", e)
+          throw e
       }
     }
   }

@@ -16,7 +16,9 @@ object LogIncorrectPayment extends FlinkStreamlet{
       try {
         readStream(in).map(x => log.info(x.text))
       } catch {
-        case e: Exception => log.error(e.getStackTrace.mkString)
+        case e: Exception =>
+          log.error("LogIncorrectPayment error", e)
+          throw e
       }
     }
   }
