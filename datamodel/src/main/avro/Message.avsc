@@ -1,0 +1,10 @@
+{
+    "namespace": "juliomoralez.data",
+    "type": "record",
+    "name": "Message",
+    "fields":[
+        {
+            "name": "text", "type": "string"
+        }
+    ]
+}
