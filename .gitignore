@@ -29,3 +29,4 @@ project/activator-sbt*
 
 target-env.sbt
 dg-data.sh
+/data/

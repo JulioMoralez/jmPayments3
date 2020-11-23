@@ -18,6 +18,7 @@ lazy val root =
       paymentSystemPipeline,
       datamodel,
       httpReader,
+      akkaHelper,
       paymentsReader,
       paymentChecker,
       paymentParticipant,
@@ -38,6 +39,17 @@ lazy val paymentSystemPipeline = (project in file("./payment-system-pipeline"))
   )
 
 lazy val httpReader = (project in file("./http-reader"))
+  .enablePlugins(CloudflowAkkaPlugin)
+  .settings(
+    commonSettings,
+    libraryDependencies ++= Seq(
+      "ch.qos.logback" %  "logback-classic" % logbackVersion,
+      "org.scalatest"  %% "scalatest"       % scalatestVersion  % "test"
+    )
+  )
+  .dependsOn(datamodel)
+
+lazy val akkaHelper = (project in file("./akka-helper"))
   .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     commonSettings,

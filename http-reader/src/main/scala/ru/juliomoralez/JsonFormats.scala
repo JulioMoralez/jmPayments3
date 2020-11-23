@@ -1,7 +1,7 @@
-package ru.juliomoralez.payment
+package ru.juliomoralez
 
 import juliomoralez.data.Message
-import spray.json.{DefaultJsonProtocol, DeserializationException, JsObject, JsString, JsValue, RootJsonFormat}
+import spray.json._
 
 object JsonFormats extends DefaultJsonProtocol {
 
