@@ -26,8 +26,8 @@ class PaymentChecker extends FlinkStreamlet with Serializable {
         val paymentRegex = context.streamletConfig.getString(paymentRegexConf.key).r
         val checkedTransaction = readStream(in).map(checkTransaction(_, paymentRegex))
 
-        writeStream(outValid, checkedTransaction.flatMap(_.valid))
-        writeStream(outInvalid, checkedTransaction.flatMap(_.invalid))
+        writeStream(outValid, checkedTransaction.flatMap(_.right.toSeq))
+        writeStream(outInvalid, checkedTransaction.flatMap(_.left.toSeq))
       } catch {
         case e: Exception =>
           log.error("PaymentChecker error", e)
@@ -38,12 +38,11 @@ class PaymentChecker extends FlinkStreamlet with Serializable {
 }
 
 object PaymentChecker {
-  final case class CheckedTransaction(valid: Option[Payment], invalid: Option[Message])
 
-  def checkTransaction(message: Message, paymentRegex: Regex): CheckedTransaction = {
+  def checkTransaction(message: Message, paymentRegex: Regex): Either[Message, Payment] = {
     message.text match {
-      case paymentRegex(from, _, to, _, value) => CheckedTransaction(Some(Payment(from, to, value.toInt)), None)
-      case _                                   => CheckedTransaction(None, Some(message))
+      case paymentRegex(from, _, to, _, value) => Right(Payment(from, to, value.toInt))
+      case _                                   => Left(message)
     }
   }
 }
