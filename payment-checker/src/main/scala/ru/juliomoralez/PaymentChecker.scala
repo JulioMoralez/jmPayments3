@@ -5,7 +5,6 @@ import cloudflow.streamlets.avro.{AvroInlet, AvroOutlet}
 import cloudflow.streamlets.{ConfigParameter, StreamletShape}
 import juliomoralez.data.{Message, Payment}
 import org.apache.flink.api.scala.createTypeInformation
-import org.apache.flink.streaming.api.scala.DataStream
 import ru.juliomoralez.PaymentChecker.checkTransaction
 import ru.juliomoralez.configs.Config.{config, paymentRegexConf}
 
@@ -37,11 +36,11 @@ class PaymentChecker extends FlinkStreamlet with Serializable {
   }
 }
 
-object PaymentChecker {
+object PaymentChecker extends Serializable {
 
   def checkTransaction(message: Message, paymentRegex: Regex): Either[Message, Payment] = {
     message.text match {
-      case paymentRegex(from, _, to, _, value) => Right(Payment(from, to, value.toInt))
+      case paymentRegex(from, _, to, _, value) => Right(Payment(0, from, to, value.toInt))
       case _                                   => Left(message)
     }
   }

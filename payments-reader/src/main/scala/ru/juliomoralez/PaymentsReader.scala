@@ -5,8 +5,9 @@ import cloudflow.streamlets.avro.AvroOutlet
 import cloudflow.streamlets.{ConfigParameter, StreamletShape}
 import juliomoralez.data.Message
 import org.apache.flink.api.scala.createTypeInformation
+import ru.juliomoralez.PaymentsReader.getPaymentReader
 import ru.juliomoralez.configs.Config._
-import ru.juliomoralez.reader.{PaymentFileNameFromConf, PaymentFileNameFromHttp}
+import ru.juliomoralez.reader.{PaymentFileNameFromConf, PaymentFileNameFromHttp, ReaderFactory}
 
 class PaymentsReader extends FlinkStreamlet with Serializable {
   @transient val out: AvroOutlet[Message] = AvroOutlet[Message]("out")
@@ -18,12 +19,8 @@ class PaymentsReader extends FlinkStreamlet with Serializable {
 
     override def buildExecutionGraph: Unit = {
       try {
-        val paymentFromHttp = context.streamletConfig.getBoolean(paymentFromHttpConf.key)
-        val reader = if (paymentFromHttp) {
-          new PaymentFileNameFromHttp
-        } else {
-          new PaymentFileNameFromConf
-        }
+        val sourcePayment = context.streamletConfig.getString(sourcePaymentConf.key)
+        val reader = getPaymentReader(sourcePayment)
         val source = reader.readPayment(context)
         writeStream(out, source)
       } catch {
@@ -32,5 +29,15 @@ class PaymentsReader extends FlinkStreamlet with Serializable {
           throw e
       }
     }
+  }
+}
+
+object PaymentsReader extends Serializable {
+  def getPaymentReader(sourcePayment: String): ReaderFactory = {
+    sourcePayment match {
+      case "http" => new PaymentFileNameFromHttp
+      case "file" => new PaymentFileNameFromConf
+      case _ => throw new Exception("Source payment type not selected. Parameter in config file 'source-payment' get 'http' or 'file' values")
+      }
   }
 }

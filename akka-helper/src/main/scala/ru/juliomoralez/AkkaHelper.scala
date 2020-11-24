@@ -24,7 +24,7 @@ class AkkaHelper extends AkkaStreamlet with Serializable {
         val defaultPaymentFileDir = context.streamletConfig.getString(defaultPaymentFileDirConf.key)
         val pathDir = Paths.get(defaultPaymentFileDir)
 
-        plainSource(in).to(Sink.foreach(receiveMsg => {
+        plainSource(in).to(Sink.foreach{receiveMsg =>
           val nameFile = receiveMsg.text
           val pathFile = Paths.get(nameFile)
 
@@ -38,7 +38,7 @@ class AkkaHelper extends AkkaStreamlet with Serializable {
           } else {
             log.info(s"Missing file: $nameFile")
           }
-        }))
+        })
       }  catch {
         case e: Exception =>
           log.error("AkkaHelper error", e)

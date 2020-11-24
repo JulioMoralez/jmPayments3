@@ -4,6 +4,10 @@
     "name": "Payment",
     "fields":[
         {
+            "name": "key",
+            "type": "int"
+        },
+        {
             "name": "from",
             "type": "string"
         },

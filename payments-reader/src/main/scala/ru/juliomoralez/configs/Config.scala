@@ -1,13 +1,13 @@
 package ru.juliomoralez.configs
 
-import cloudflow.streamlets.{BooleanConfigParameter, ConfigParameter, StringConfigParameter}
+import cloudflow.streamlets.{ConfigParameter, StringConfigParameter}
 
 object Config {
-  val fileDir: ConfigParameter = StringConfigParameter(
+  val fileDirConf: ConfigParameter = StringConfigParameter(
     "file-dir",
     "Directory name with payment files"
   )
-  val fileRegex: ConfigParameter = StringConfigParameter(
+  val fileRegexConf: ConfigParameter = StringConfigParameter(
     "file-regex",
     "Payment files mask"
   )
@@ -15,17 +15,17 @@ object Config {
     "default-payment-file-dir",
     "Default directory where payment file is located"
   )
-  val paymentFromHttpConf: ConfigParameter = BooleanConfigParameter(
-    "payment-from-http",
+  val sourcePaymentConf: ConfigParameter = StringConfigParameter(
+    "source-payment",
     "Selection source payment. " +
-      "True - from Http, example. {\"text\":\"file1.txt\"}." +
-      "False - from 'fileDir' with 'fileRegex' mask"
+      "'http' - from Http, use POST request method" +
+      "'file' - from 'fileDir' with 'fileRegex' mask"
   )
 
   val config: Vector[ConfigParameter] = Vector(
-    fileDir,
-    fileRegex,
+    fileDirConf,
+    fileRegexConf,
     defaultPaymentFileDirConf,
-    paymentFromHttpConf
+    sourcePaymentConf
   )
 }
