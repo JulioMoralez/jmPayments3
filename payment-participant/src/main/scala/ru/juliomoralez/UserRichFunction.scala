@@ -22,8 +22,8 @@ class UserRichFunction(usersStartBalance: Map[String, Int], defaultUserBalance: 
         if (newBalanceFrom >= 0) {
           val userTo = users.get(payment.to)
           val newBalanceTo = userTo.balance + payment.value
-          users.put(payment.from, User(userFrom.name, newBalanceFrom, userFrom.age))
-          users.put(payment.to, User(userTo.name, newBalanceTo, userTo.age))
+          users.put(payment.from, userFrom.copy(balance = newBalanceFrom))
+          users.put(payment.to, userTo.copy(balance = newBalanceTo))
           out.collect(LogMessage(LogLevel.INFO, s"[$message] Payment successful. New balance: ${payment.from}=$newBalanceFrom, ${payment.to}=$newBalanceTo"))
         } else {
           out.collect(LogMessage(LogLevel.WARNING, s"[$message] Canceling a payment"))
