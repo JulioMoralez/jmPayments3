@@ -1,0 +1,6 @@
+{
+    "namespace": "juliomoralez.data",
+    "type": "enum",
+    "name": "LogLevel",
+    "symbols" : ["INFO", "WARNING", "ERROR"]
+}

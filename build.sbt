@@ -22,7 +22,7 @@ lazy val root =
       paymentsReader,
       paymentChecker,
       paymentParticipant,
-      logIncorrectPayment
+      logPayment
     )
 
 lazy val datamodel = (project in file("./datamodel"))
@@ -93,7 +93,7 @@ lazy val paymentParticipant = (project in file("./payment-participant"))
   )
   .dependsOn(datamodel)
 
-lazy val logIncorrectPayment = (project in file("./log-incorrect-payment"))
+lazy val logPayment = (project in file("./log-payment"))
   .enablePlugins(CloudflowFlinkPlugin)
   .settings(
     commonSettings,

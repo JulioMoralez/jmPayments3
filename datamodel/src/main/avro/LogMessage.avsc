@@ -1,0 +1,15 @@
+{
+    "namespace": "juliomoralez.data",
+    "type": "record",
+    "name": "LogMessage",
+    "fields":[
+        {
+            "name": "level",
+            "type": "juliomoralez.data.LogLevel"
+        },
+        {
+            "name": "text",
+            "type": "string"
+        }
+    ]
+}
