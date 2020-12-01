@@ -3,7 +3,7 @@ package ru.juliomoralez
 import cloudflow.flink.{FlinkStreamlet, FlinkStreamletLogic}
 import cloudflow.streamlets.avro.AvroOutlet
 import cloudflow.streamlets.{ConfigParameter, StreamletShape}
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import org.apache.flink.api.scala.createTypeInformation
 import ru.juliomoralez.PaymentsReader.getPaymentReader
 import ru.juliomoralez.configs.Config._

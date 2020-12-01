@@ -1,7 +1,7 @@
 package ru.juliomoralez.reader
 import cloudflow.flink.FlinkStreamletContext
 import cloudflow.localrunner.LocalRunner.log
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import org.apache.flink.api.java.io.TextInputFormat
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.core.fs.Path

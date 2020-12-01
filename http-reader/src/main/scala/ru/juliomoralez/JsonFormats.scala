@@ -1,6 +1,6 @@
 package ru.juliomoralez
 
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import spray.json._
 
 object JsonFormats extends DefaultJsonProtocol {

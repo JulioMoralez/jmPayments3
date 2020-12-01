@@ -4,7 +4,7 @@ import java.nio.file.{Files, Path, Paths}
 
 import cloudflow.flink.FlinkStreamletContext
 import cloudflow.localrunner.LocalRunner.log
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.streaming.api.scala.DataStream
 import ru.juliomoralez.configs.Config.{fileDirConf, fileRegexConf}

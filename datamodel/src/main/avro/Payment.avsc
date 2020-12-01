@@ -1,5 +1,5 @@
 {
-    "namespace": "juliomoralez.data",
+    "namespace": "ru.juliomoralez.data",
     "type": "record",
     "name": "Payment",
     "fields":[

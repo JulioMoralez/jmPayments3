@@ -8,7 +8,7 @@ import cloudflow.akkastream.AkkaStreamlet
 import cloudflow.akkastream.scaladsl.RunnableGraphStreamletLogic
 import cloudflow.streamlets.avro.AvroInlet
 import cloudflow.streamlets.{ConfigParameter, StreamletShape}
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import ru.juliomoralez.configs.Config.{config, defaultPaymentFileDirConf}
 
 class AkkaHelper extends AkkaStreamlet with Serializable {

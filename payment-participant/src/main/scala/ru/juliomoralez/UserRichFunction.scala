@@ -1,7 +1,7 @@
 package ru.juliomoralez
 
 import cloudflow.localrunner.LocalRunner.log
-import juliomoralez.data.{LogLevel, LogMessage, Payment}
+import ru.juliomoralez.data.{LogLevel, LogMessage, Payment}
 import org.apache.flink.api.common.functions.RichFlatMapFunction
 import org.apache.flink.api.common.state.{MapState, MapStateDescriptor}
 import org.apache.flink.util.Collector

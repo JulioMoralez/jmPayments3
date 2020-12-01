@@ -1,7 +1,7 @@
 package ru.juliomoralez.reader
 
 import cloudflow.flink.FlinkStreamletContext
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import org.apache.flink.streaming.api.scala.DataStream
 
 trait ReaderFactory {

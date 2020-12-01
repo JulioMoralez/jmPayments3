@@ -4,7 +4,7 @@ import cloudflow.flink.{FlinkStreamlet, FlinkStreamletLogic}
 import cloudflow.localrunner.LocalRunner.log
 import cloudflow.streamlets.StreamletShape
 import cloudflow.streamlets.avro.AvroInlet
-import juliomoralez.data.LogMessage
+import ru.juliomoralez.data.LogMessage
 import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.streaming.api.functions.co.RichCoMapFunction
@@ -23,6 +23,7 @@ class LogPayment extends FlinkStreamlet {
           .connect(readStream(inPayment))
           .keyBy(0, 0)
           .map(new LogRichFunction)
+          .uid("map-id")
       } catch {
         case e: Exception =>
           log.error("LogIncorrectPayment error", e)
@@ -33,7 +34,6 @@ class LogPayment extends FlinkStreamlet {
 }
 
 object LogPayment extends Serializable {
-
   class LogRichFunction() extends RichCoMapFunction[LogMessage, LogMessage, Unit] {
     @transient lazy val countId: ValueState[Long] = getRuntimeContext.getState(new ValueStateDescriptor[Long]("count-log-message", classOf[Long]))
 

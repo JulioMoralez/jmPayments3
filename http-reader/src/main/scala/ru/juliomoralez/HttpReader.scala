@@ -5,7 +5,7 @@ import cloudflow.akkastream.AkkaServerStreamlet
 import cloudflow.akkastream.util.scaladsl.HttpServerLogic
 import cloudflow.streamlets.StreamletShape
 import cloudflow.streamlets.avro.AvroOutlet
-import juliomoralez.data.Message
+import ru.juliomoralez.data.Message
 import ru.juliomoralez.JsonFormats.MessageJsonFormat
 
 class HttpReader extends AkkaServerStreamlet with Serializable {

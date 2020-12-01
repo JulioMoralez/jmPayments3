@@ -1,5 +1,5 @@
 {
-    "namespace": "juliomoralez.data",
+    "namespace": "ru.juliomoralez.data",
     "type": "enum",
     "name": "LogLevel",
     "symbols" : ["INFO", "WARNING", "ERROR"]

@@ -1,11 +1,11 @@
 {
-    "namespace": "juliomoralez.data",
+    "namespace": "ru.juliomoralez.data",
     "type": "record",
     "name": "LogMessage",
     "fields":[
         {
             "name": "level",
-            "type": "juliomoralez.data.LogLevel"
+            "type": "ru.juliomoralez.data.LogLevel"
         },
         {
             "name": "text",
